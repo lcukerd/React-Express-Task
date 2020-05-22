@@ -9,9 +9,13 @@ class Main extends Component {
         return (
             <div className="container is-fluid">
                 <Employee />
-                <Survey />
-                <EmployeeSurveys />
-                <button className="button is-primary">Done</button>
+                <div className="columns">
+                    <div class="column"> <Survey /></div>
+                    <div class="column"> <EmployeeSurveys /></div>
+                </div>
+                <div style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center' }}>
+                    <button className="button is-primary">Done</button>
+                </div>
             </div>
         )
     }

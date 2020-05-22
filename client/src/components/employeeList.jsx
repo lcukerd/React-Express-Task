@@ -30,9 +30,9 @@ class EmployeeList extends Component {
 
     render() {
         return (
-            <div className="columns is-centered">
-                <div className="column is-half">
-                    <h3 className="title is-3" style={{ textAlign: "center" }}>Select Employee</h3>
+            <div >
+                <h3 className="title is-3" style={{ textAlign: "center" }}>Select Employee</h3>
+                <div style={{ display: 'flex', 'justify-content': 'center', 'align-items': 'center' }}>
                     <div className="select">
                         <select ref={dropDown => this.dropDown = dropDown} onChange={() => console.log(this.state.employees[this.dropDown.selectedIndex])}>
                             {this.state.employees.map(employee => <option key={employee} >{employee}</option>)}

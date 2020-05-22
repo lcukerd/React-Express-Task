@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import store from './../store'
-
+import * as actions from './../actions'
 
 class EmployeeSurveys extends Component {
     state = {
         surveys: []
     }
 
-
-
-    fetchSurveys = async () => {
-        const response = await fetch('/getSurveys', { method: 'GET' });
-        const body = await response.json();
-        this.setState({ surveys: body });
+    handleClick = (ele, action) => {
+        const survey = ele.target.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+        store.dispatch({
+            type: action,
+            payload: {
+                survey
+            }
+        });
     }
 
     showList = item => {
+        // Disbaled the add button because that seems like a mistake in requested UI
         return (
-            <div className="list-item">
+            <div className="list-item" key={item} id={item}>
                 <div className="level is-mobile">
                     <div className="level-left">
                         <div className="level-item">
@@ -26,10 +29,10 @@ class EmployeeSurveys extends Component {
                     </div>
                     <div className="level-right">
                         <div className="level-item">
-                            <button class="button is-success is-small is-light is-focused">+ Add</button>
+                            <button class="button is-success is-small is-light is-focused" onClick={ele => this.handleClick(ele, actions.ADD_SURVEY)} disabled>+ Add</button>
                         </div>
                         <div className="level-item">
-                            <button class="button is-danger is-small is-light is-focused">- Remove</button>
+                            <button class="button is-danger is-small is-light is-focused" onClick={ele => this.handleClick(ele, actions.REMOVE_SURVEY)} > - Remove</button>
                         </div>
                     </div>
                 </div>
@@ -37,7 +40,11 @@ class EmployeeSurveys extends Component {
         )
     }
 
-    componentDidMount = () => this.fetchSurveys();
+    componentDidMount = () => {
+        store.subscribe(() => {
+            this.setState({ surveys: store.getState().surveys });
+        });
+    }
 
     render() {
         return (

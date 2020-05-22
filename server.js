@@ -6,6 +6,8 @@ const port = process.env.PORT || 5000;
 
 // Make sure that file is taken from build folder when deployed on Server
 let fileLoc = '';
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'client/build')));
 if (process.env.NODE_ENV === 'production') fileLoc = path.join(__dirname = 'client/build/index.html');
 else fileLoc = path.join(__dirname, 'client/public/index.html');
@@ -14,11 +16,7 @@ server.listen(port);
 console.log(`Using port ${port}`)
 
 const employees = ['Employee 1', 'Employee 2', 'Employee 3', 'Employee 4', 'Employee 5', 'Employee 6'];
-const survyes = ['Survey 1', 'Survey 2', 'Survey 3', 'Survey 4', 'Survey 5', 'Survey 6'];
-
-let employeeSurvey = {
-    'Employee 1': ['Survey 4', 'Survey 5']
-}
+const surveys = ['Survey 1', 'Survey 2', 'Survey 3', 'Survey 4', 'Survey 5', 'Survey 6'];
 
 // Will return the homepage
 app.get('/', (req, res) => {
@@ -34,15 +32,13 @@ app.get('/getEmployees', (req, res) => {
 // Will return an array of surveys
 app.get('/getSurveys', (req, res) => {
     console.log('Returning surveys array')
-    res.send(survyes);
+    res.send(surveys);
 });
 
 // Will add survey to employee
-app.post('/putSurvey', (req, res) => {
+app.put('/putSurvey', (req, res) => {
     try {
-        const body = JSON.parse(req.body);
-        employeeSurvey[body.employee] = body.surveys;
-        console.log(`Successfully added ${body.survyes.length} surveys for ${employees}`)
+        console.log(`Successfully Received ${JSON.stringify(req.body)}`)
         res.sendStatus(204);
     }
     catch (err) {

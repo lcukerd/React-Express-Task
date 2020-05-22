@@ -7,7 +7,11 @@ import store from './../store'
 class Main extends Component {
     render() {
         return (
-            <div>
+            <div className="container is-fluid">
+                <Employee />
+                <Survey />
+                <EmployeeSurveys />
+                <button className="button is-primary">Done</button>
             </div>
         )
     }
